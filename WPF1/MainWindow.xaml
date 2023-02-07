@@ -11,7 +11,7 @@
             <ColumnDefinition Width="679*"/>
             <ColumnDefinition Width="121*"/>
         </Grid.ColumnDefinitions>
-        <Canvas Background="White" Name="MyCanvas" >
+        <Canvas Background="White" Name="MyCanvas" MouseLeftButtonDown="MyCanvas_MouseLeftButtonDown">
 
         </Canvas>
         <StackPanel Grid.Column="1">
