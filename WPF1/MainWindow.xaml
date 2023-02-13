@@ -16,6 +16,9 @@
         </Canvas>
         <StackPanel Grid.Column="1">
             <Button Click="Button_Click" Background="Aqua" FontSize="10" FontStyle="Oblique" Foreground="Coral">Создать Прямоугольник</Button>
+            <TextBox Name="textBoxForNameImage"></TextBox>
+            <Button Height="30" Background="Purple" FontSize="15" Foreground="White" Click="Button_Click_1">Добавить</Button>
+            <TextBlock Name="_textBlocFromNameBase"></TextBlock>
         </StackPanel>
     </Grid>
 </Window>

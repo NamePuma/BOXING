@@ -14,6 +14,9 @@ namespace WPF1
 {
     public class Box
     {
+        List<Shapes> shapes;
+
+
         public delegate void Delegate(Box box);
         Delegate OtDel;
 
@@ -34,8 +37,61 @@ namespace WPF1
         private const double defoultSize = 100;
         private bool Solution = false;
         private bool SolutionForMouse = false;
+
+        #region Свойства для базы 
+        
+
+        public double GetWidth
+        {
+            get { return SHAP.Width; }
+            
+        }
+
+        public double GetHeight
+        {
+            get { return SHAP.Height; }
+
+        }
+
+        public Brush GetFill
+        {
+            get { return SHAP.Fill; }
+
+        }
+
+        public double GetBorder
+        {
+            get { return BorderBorder.BorderThickness.Top; }
+
+        }
+
+        public Brush GetBorderColors
+        {
+            get { return BorderBorder.BorderBrush; }
+
+        }
+
+        public double GetX
+        {
+            get { return Canvas.GetTop(BorderBorder); ; }
+
+        }
+
+        public double GetY
+        {
+            get { return Canvas.GetLeft(BorderBorder); }
+
+        }
+
+
+
+
+        #endregion
         public Box(Canvas canvas, Shape rectangle)
         {
+            //Колеция для класса
+            shapes= new List<Shapes>();
+
             BorderBorder = new Border();
             canvas1 = new Canvas();
             UpCircle = new Ellipse();
@@ -219,6 +275,10 @@ namespace WPF1
             DownCircle.Visibility = Visibility.Collapsed;
             BorderBorder.BorderBrush = null;
         }
+
+
+
+        
 
     }
 }
