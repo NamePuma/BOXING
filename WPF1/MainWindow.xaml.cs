@@ -27,7 +27,9 @@ namespace WPF1
         private Box selectedId = null;
 
         private ObservableCollection<Box> box1 = new ObservableCollection<Box>();
-       
+        public ObservableCollection<Image> ImagesForListBox { get; set; } = new ObservableCollection<Image>(); 
+        
+        
 
        
         
@@ -38,6 +40,8 @@ namespace WPF1
             InitializeComponent();
 
             Connect("10.14.206.28", "5432", "student", "1234", "Oleshkina");
+            DataContext= this;
+            LoadImage();
         }
         private NpgsqlConnection Connection;
         public void Connect(string host, string stringport, string username, string password, string database) {
@@ -112,7 +116,7 @@ namespace WPF1
             int shapeType = numberShapeType.GetInt32(0);
             numberShapeType.Close();
 
-
+            
             #region Запрос для фигуры 
             foreach (Box box in box1)
             {
@@ -144,15 +148,85 @@ namespace WPF1
                 npgsqlCommandForShape.Parameters.AddWithValue("@imageshape", NpgsqlDbType.Integer, imageID);
 
                 int result = npgsqlCommandForShape.ExecuteNonQuery();
+
+                 
                 
 
-
+                
             }
+
             #endregion
+            LoadNameImage(imageID, textsBoxForText);
 
 
 
+        }
+        private void LoadNameImage(int id, string name)
+        {
+            Image image = new Image(id, name);
+            ImagesForListBox.Add(image);
 
+        }
+        private void LoadImage()
+        {
+            NpgsqlCommand npgsqlCommand = Connection.CreateCommand();
+            npgsqlCommand.CommandText = " select _idimage, name from \"Image\"";
+           var rezult = npgsqlCommand.ExecuteReader();
+            if (rezult.HasRows)
+            {
+                while(rezult.Read())
+                {
+                    ImagesForListBox.Add(new Image(rezult.GetInt32(0), rezult.GetString(1)));
+
+
+                }
+            }
+            rezult.Close();
+
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            Image image = listForImage.SelectedItem as Image;
+            double idForImage = image.idImage;
+            
+            NpgsqlCommand npgsqlCommand = Connection.CreateCommand();
+            npgsqlCommand.CommandText = " select * from \"Shape\" where imageshape = @q";
+            npgsqlCommand.Parameters.AddWithValue("@q", NpgsqlDbType.Double, idForImage);
+            var rezult = npgsqlCommand.ExecuteReader();
+                if (rezult.HasRows)
+                {
+
+                    while (rezult.Read())
+                    {
+                        Box box1 = new Box(MyCanvas, new Rectangle())
+                        {
+
+                            GetWidth = rezult.GetDouble(1),
+                            GetHeight = rezult.GetDouble(2),
+                            GetFill = new SolidColorBrush((Color)ColorConverter.ConvertFromString(rezult.GetString(3))),
+                            GetBorder = rezult.GetDouble(4),
+                            GetBorderColors = new SolidColorBrush((Color)ColorConverter.ConvertFromString(rezult.GetString(5))),
+                            GetX = rezult.GetDouble(6),
+                            GetY = rezult.GetDouble(7),
+                            
+
+
+                        };
+                        
+                   
+                    }
+                } rezult.Close();
+            
+            
+           
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            
+            MyCanvas.Children.Clear();
         }
     }
 }

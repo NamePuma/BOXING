@@ -44,42 +44,54 @@ namespace WPF1
         public double GetWidth
         {
             get { return SHAP.Width; }
+            set { SHAP.Width = value; }
             
         }
 
         public double GetHeight
         {
             get { return SHAP.Height; }
+            set { SHAP.Height = value; }
 
         }
 
         public Brush GetFill
         {
             get { return SHAP.Fill; }
+            set { SHAP.Fill = value; }
 
         }
 
         public double GetBorder
         {
             get { return BorderBorder.BorderThickness.Top; }
+            set { BorderBorder.BorderThickness = new Thickness(value); }
 
         }
 
         public Brush GetBorderColors
         {
-            get { return BorderBorder.BorderBrush; }
+            get { return SHAP.Stroke; }
+            set
+            {
+                SHAP.Stroke = value;
+            }
 
         }
 
         public double GetX
         {
-            get { return Canvas.GetTop(BorderBorder); ; }
+            get { return Canvas.GetTop(BorderBorder); ;
+            
+            }
+            set { Canvas.SetTop(BorderBorder, value);}
 
         }
 
         public double GetY
         {
             get { return Canvas.GetLeft(BorderBorder); }
+            set { Canvas.SetLeft(BorderBorder, value);}
 
         }
 
@@ -125,6 +137,7 @@ namespace WPF1
             Canvas.SetLeft(BorderBorder, left);
             Canvas.SetTop(BorderBorder, top);
             SHAP = rectangle;
+            SHAP.Stroke = FocusColor;
             CreateRectangle(canvas);
 
 
@@ -254,6 +267,7 @@ namespace WPF1
             
             canvas1.Background = Brushes.Blue;
             SHAP.Fill = FocusColor;
+            
             Mouse.Capture(SHAP);
 
             if (OtDel != null)

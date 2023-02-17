@@ -18,7 +18,21 @@
             <Button Click="Button_Click" Background="Aqua" FontSize="10" FontStyle="Oblique" Foreground="Coral">Создать Прямоугольник</Button>
             <TextBox Name="textBoxForNameImage"></TextBox>
             <Button Height="30" Background="Purple" FontSize="15" Foreground="White" Click="Button_Click_1">Добавить</Button>
-            <TextBlock Name="_textBlocFromNameBase"></TextBlock>
+            <Label Height="30"></Label>
+            <TextBlock>Выберите картинку(константу)</TextBlock>
+
+            <ListBox Name="listForImage" Height="150" FontSize="10"   ItemsSource="{Binding ImagesForListBox}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel>
+                            <Label Content="{Binding name }"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+            <Button Click="Button_Click_2">Ну ка добавить</Button>
+            <Button Click="Button_Click_3">ОЧИСТИТЬ</Button>
         </StackPanel>
     </Grid>
 </Window>
